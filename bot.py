@@ -7,7 +7,7 @@ from telegram import Update
 from keep_alive import keep_alive
 keep_alive()
 
-BOT_TOKEN = "7423511373:AAEeQe0fQYsaWHksR8nZucnGjZWbwVKUADs"
+BOT_TOKEN = "7423511373:AAFs88vkgehUWG7q_NdNl_DxHZPwJxponDA"
 ADMIN_IDS = [7761915412, 6768452438]
 bot = telebot.TeleBot(BOT_TOKEN)
 
@@ -16,6 +16,9 @@ profit = 0
 user_turns = {}
 DATA_FILE = "data.json"
 now = datetime.now().strftime("%H:%M:%S - %d/%m/%Y")
+
+def generate_nap_code():
+    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=6))
 
 def analyze_md5(md5_hash):
     global history
