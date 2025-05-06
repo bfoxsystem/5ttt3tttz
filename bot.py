@@ -229,7 +229,7 @@ def send_welcome(message):
                           f"🔹 /report <nội dung> → Báo lỗi về bot\n"
                           f"🚫 Lệnh cho Quản Trị Viên.\n"
                           f"🔹 /addtun <id/tun> → Cấp lượt dùng\n"
-                          f"🔹 /settun <id/tun> → Set lại lượt dùng\n"
+                          f"🔹 /settun <id/tun/content> → Set lại lượt dùng\n"
                           f"🔹 /result <tài/xỉu> → Nhập kết quả thực tế\n"
                           f"🔹 /sendmessage <id/title/content> → Gửi tin nhắn cho người dùng\n"
                           f"🆔️ ID của bạn là: {user_id}\n\n"
@@ -419,16 +419,17 @@ def truluot_nap(message):
 
     parts = message.text.split()
     if len(parts) < 3 or not parts[1].isdigit() or not parts[2].isdigit():
-        bot.reply_to(message, "❌ Sai cú pháp. Dùng /settun <user_id> <số lượt>")
+        bot.reply_to(message, "❌ Sai cú pháp. Dùng /settun <user_id> <số lượt> <lý do>")
         return
 
     uid = int(parts[1])
     turns = int(parts[2])
+    content = " ".join(parts[3:])
     user_turns[uid] = user_turns.get(uid, 0) - turns
 
     save_data()
-    bot.send_message(uid, f"🚫OOPS. Bạn đã bị set lại lượt dùng!\n🎫 Số lượt mới của bạn sau khi bị trừ là: {turns}\n🎲 Nếu bạn thắc mắc tại sao bị trừ. Vui lòng liên hệ @qqaassdd1231\n\n🕒 Time: {now}")
-    bot.reply_to(message, f"📥 Đã set lại {turns} lượt của user {uid}\n\n🕒 Time: {now}")
+    bot.send_message(uid, f"🚫OOPS. Bạn đã bị set lại lượt dùng!\n🎫 Số lượt mới của bạn sau khi bị trừ là: {turns}\n🎲 Lý Do Trừ: {content}\n\n🕒 Time: {now}")
+    bot.reply_to(message, f"📥 Đã set lại {turns} lượt của user {uid}\n✉️ Lý do set: {content}\n\n🕒 Time: {now}")
 
 # ======== Lệnh /dabank =========
 @bot.message_handler(commands=['dabank'])
@@ -466,7 +467,7 @@ def handle_report(message):
         return
         
     title = parts[1]
-    content = " ".join(parts[3:])
+    content = " ".join(parts[2:])
     user_id = message.from_user.id
 
     for admin_id in ADMIN_IDS:
