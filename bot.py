@@ -230,7 +230,8 @@ def send_welcome(message):
                           f"🚫 Lệnh cho Quản Trị Viên.\n"
                           f"🔹 /addtun <id/tun> → Cấp lượt dùng\n"
                           f"🔹 /settun <id/tun> → Set lại lượt dùng\n"
-                          f"🔹 /result <tài/xỉu> → Nhập kết quả thực tế (Admin)\n"
+                          f"🔹 /result <tài/xỉu> → Nhập kết quả thực tế\n"
+                          f"🔹 /sendmessage <id/title/content> → Gửi tin nhắn cho người dùng\n"
                           f"🆔️ ID của bạn là: {user_id}\n\n"
                           f"🕒 Time: {now}")
 
@@ -418,7 +419,7 @@ def truluot_nap(message):
 
     parts = message.text.split()
     if len(parts) < 3 or not parts[1].isdigit() or not parts[2].isdigit():
-        bot.reply_to(message, "❌ Sai cú pháp. Dùng /truluot <user_id> <số lượt>")
+        bot.reply_to(message, "❌ Sai cú pháp. Dùng /settun <user_id> <số lượt>")
         return
 
     uid = int(parts[1])
@@ -426,8 +427,8 @@ def truluot_nap(message):
     user_turns[uid] = user_turns.get(uid, 0) - turns
 
     save_data()
-    bot.send_message(uid, f"🚫OOPS. Bạn đã bị trừ lượt dùng!\n🎫 Số lượt mới của bạn sau khi bị trừ là: {turns}\n🎲 Nếu bạn thắc mắc tại sao bị trừ. Vui lòng liên hệ @qqaassdd1231\n\n🕒 Time: {now}")
-    bot.reply_to(message, f"📥 Đã trừ {turns} lượt của user {uid}\n\n🕒 Time: {now}")
+    bot.send_message(uid, f"🚫OOPS. Bạn đã bị set lại lượt dùng!\n🎫 Số lượt mới của bạn sau khi bị trừ là: {turns}\n🎲 Nếu bạn thắc mắc tại sao bị trừ. Vui lòng liên hệ @qqaassdd1231\n\n🕒 Time: {now}")
+    bot.reply_to(message, f"📥 Đã set lại {turns} lượt của user {uid}\n\n🕒 Time: {now}")
 
 # ======== Lệnh /dabank =========
 @bot.message_handler(commands=['dabank'])
