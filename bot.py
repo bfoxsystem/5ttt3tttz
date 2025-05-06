@@ -7,7 +7,7 @@ from telegram import Update
 from keep_alive import keep_alive
 keep_alive()
 
-BOT_TOKEN = "7423511373:AAHC3yKW7VnuTnt2f4EnP1F8Znp_15MC3rY"
+BOT_TOKEN = "7423511373:AAEeQe0fQYsaWHksR8nZucnGjZWbwVKUADs"
 ADMIN_IDS = [7761915412, 6768452438]
 bot = telebot.TeleBot(BOT_TOKEN)
 
