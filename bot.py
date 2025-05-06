@@ -428,7 +428,7 @@ def truluot_nap(message):
     user_turns[uid] = user_turns.get(uid, 0) - turns
 
     save_data()
-    bot.send_message(uid, f"🚫OOPS. Bạn đã bị set lại lượt dùng!\n🎫 Số lượt mới của bạn sau khi bị trừ là: {turns}\n🎲 Lý Do Trừ: {content}\n\n🕒 Time: {now}")
+    bot.send_message(uid, f"🚫OOPS. Bạn đã bị set lại lượt dùng!\n🎫 Số lượt mới của bạn sau khi bị trừ là: {turns}\n🎲 Lý do set lại lượt dùng: {content}\n\n🕒 Time: {now}")
     bot.reply_to(message, f"📥 Đã set lại {turns} lượt của user {uid}\n✉️ Lý do set: {content}\n\n🕒 Time: {now}")
 
 # ======== Lệnh /dabank =========
