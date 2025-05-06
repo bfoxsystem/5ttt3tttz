@@ -8,8 +8,7 @@ from keep_alive import keep_alive
 keep_alive()
 
 BOT_TOKEN = "7423511373:AAHC3yKW7VnuTnt2f4EnP1F8Znp_15MC3rY"
-ADMIN_IDS = [7761915412]
-ADMIN_IDS1 = [6768452438]
+ADMIN_IDS = [7761915412, 6768452438]
 bot = telebot.TeleBot(BOT_TOKEN)
 
 history = []
@@ -309,7 +308,7 @@ def get_tx_signal(message):
 @bot.message_handler(commands=['result'])
 def set_actual_result(message):
     global profit
-    if message.from_user.id not in ADMIN_IDS or not in ADMIN_IDS1:
+    if message.from_user.id not in ADMIN_IDS:
         bot.reply_to(message, "⛔ Bạn không có quyền sử dụng lệnh này!")
         return
 
@@ -380,7 +379,7 @@ def handle_nap(message):
              f"🆔️ ID của bạn là: {user_id}\n\n"
              f"🕒 Time: {now}")
 
-    for admin_id in ADMIN_IDS or in ADMIN_IDS1:
+    for admin_id in ADMIN_IDS:
         bot.send_message(admin_id, f"📥 YÊU CẦU NẠP TIỀN\n"
                                    f"👤 User ID: {user_id}\n"
                                    f"💰 Số tiền: {amount} VNĐ\n"
@@ -394,7 +393,7 @@ def handle_nap(message):
 # ======== Lệnh /congluot =========
 @bot.message_handler(commands=['addtun'])
 def congluot_nap(message):
-    if message.from_user.id not in ADMIN_IDS or not in ADMIN_IDS1:
+    if message.from_user.id not in ADMIN_IDS:
         bot.reply_to(message, "⛔ Bạn không có quyền sử dụng lệnh này!")
         return
 
@@ -414,7 +413,7 @@ def congluot_nap(message):
 # ======== Lệnh /truluot =========
 @bot.message_handler(commands=['settun'])
 def truluot_nap(message):
-    if message.from_user.id not in ADMIN_IDS or not in ADMIN_IDS1:
+    if message.from_user.id not in ADMIN_IDS:
         bot.reply_to(message, "⛔ Bạn không có quyền sử dụng lệnh này!")
         return
 
@@ -444,7 +443,7 @@ def handle_dabank(message):
     content = " ".join(parts[2:])
     user_id = message.from_user.id
 
-    for admin_id in ADMIN_IDS or in ADMIN_IDS1:
+    for admin_id in ADMIN_IDS:
         bot.send_message(admin_id, f"📥 YÊU CẦU NẠP TIỀN (GIAO DỊCH NGÂN HÀNG)\n"
                                    f"👤 User ID: {user_id}\n"
                                    f"💰 Số tiền: {amount} VNĐ\n"
@@ -471,7 +470,7 @@ def handle_report(message):
     content = " ".join(parts[2:])
     user_id = message.from_user.id
 
-    for admin_id in ADMIN_IDS or in ADMIN_IDS1:
+    for admin_id in ADMIN_IDS:
         bot.send_message(admin_id, f"🚀 Thông báo lỗi từ người dùng\n"
                                    f"👤 User ID: {user_id}\n"
                                    f"📝 Tiêu dề: {title}\n"
@@ -490,7 +489,7 @@ def handle_report(message):
 # ======== Lệnh /sendmessage =========
 @bot.message_handler(commands=['sendmessage'])
 def send_message(message):
-    if message.from_user.id not in ADMIN_IDS or not in ADMIN_IDS1:
+    if message.from_user.id not in ADMIN_IDS:
         bot.reply_to(message, "⛔ Bạn không có quyền sử dụng lệnh này!")
         return
 
