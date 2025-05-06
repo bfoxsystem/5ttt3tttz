@@ -55,8 +55,7 @@ def analyze_md5(md5_hash):
             f"   - Thuật toán 2 (4 byte đầu): {result2}\n"
             f"   - Thuật toán 3 (Tổng toàn MD5): {result3}\n\n"
             f"✅ Kết luận cuối cùng: {final_result} | 🎯 Tín hiệu mạnh!\n"
-            f"💡 Gợi ý: Cầu {final_result} đang lên mạnh!\n"
-            f"🕒 {now} ")
+            f"💡 Gợi ý: Cầu {final_result} đang lên mạnh!\n")
 
 def save_data():
     with open(DATA_FILE, "w") as f:
@@ -232,7 +231,8 @@ def send_welcome(message):
                           f"🔹 /congluot <id/tun> → Cấp lượt dùng\n"
                           f"🔹 /truluot <id/tun> → Trừ lượt dùng\n"
                           f"🔹 /result <tài/xỉu> → Nhập kết quả thực tế (Admin)\n"
-                          f"🆔️ ID của bạn là: {user_id}\n")
+                          f"🆔️ ID của bạn là: {user_id}\n\n"
+                          f"🕒 Time: {now}")
 
 # ======== lệnh /id =========
 @bot.message_handler(commands=['id'])
@@ -260,7 +260,7 @@ def get_tx_signal(message):
     save_data()
     md5_hash = parts[1]
     result_analysis = analyze_md5(md5_hash)
-    bot.reply_to(message, result_analysis + f"\n\n🆔️ ID của bạn: {user_id}\n🎫 Lượt còn lại của bạn: {turns}")
+    bot.reply_to(message, result_analysis + f"\n\n🆔️ ID của bạn: {user_id}\n🎫 Lượt còn lại của bạn: {turns}\n\n🕒 Time: {now}")
     
 
 # ======== Lệnh /tx1 =========
@@ -281,7 +281,7 @@ def get_tx_signal(message):
     save_data()
     md5_hash = parts[1]
     result_analysis = analyze_md5v1(md5_hash)
-    bot.reply_to(message, result_analysis + f"\n\n🆔️ ID của bạn: {user_id}\n🎫 Lượt còn lại của bạn: {turns}")
+    bot.reply_to(message, result_analysis + f"\n\n🆔️ ID của bạn: {user_id}\n🎫 Lượt còn lại của bạn: {turns}\n\n🕒 Time: {now}")
 
 # ======== Lệnh /tx2 =========
 @bot.message_handler(commands=['tx2'])
@@ -301,7 +301,7 @@ def get_tx_signal(message):
     save_data()
     md5_hash = parts[1]
     result_analysis = analyze_md5v2(md5_hash)
-    bot.reply_to(message, result_analysis + f"\n\n🆔️ ID của bạn: {user_id}\n🎫 Lượt còn lại của bạn: {turns}")
+    bot.reply_to(message, result_analysis + f"\n\n🆔️ ID của bạn: {user_id}\n🎫 Lượt còn lại của bạn: {turns}\n\n🕒 Time: {now}")
     
 # ======== Lệnh /result =========
 @bot.message_handler(commands=['result'])
@@ -375,7 +375,8 @@ def handle_nap(message):
              f"➡️ Nội dung chuyển khoản: NAP{code}\n"
              f"⏳ Sau khi chuyển khoản, admin sẽ duyệt và cộng {turns} lượt cho bạn.\n"
              f"🔹 Bạn có thể lấy id sau đó gửi bill và id của bạn cho @qqaassdd1231 để được duyệt nhanh hơn\n"
-             f"🆔️ ID của bạn là: {user_id}")
+             f"🆔️ ID của bạn là: {user_id}\n\n"
+             f"🕒 Time: {now}")
 
     for admin_id in ADMIN_IDS:
         bot.send_message(admin_id, f"📥 YÊU CẦU NẠP TIỀN\n"
@@ -383,12 +384,13 @@ def handle_nap(message):
                                    f"💰 Số tiền: {amount} VNĐ\n"
                                    f"🎫 Lượt mua: {turns}\n"
                                    f"📝 Nội dung: NAP{code}\n\n"
-                                   f"📥 Duyệt bằng lệnh: /congluot {user_id} {turns}")
+                                   f"📥 Duyệt bằng lệnh: /addtun {user_id} {turns}\n\n"
+                                   f"🕒 Time: {now}")
 
     bot.reply_to(message, reply)
 
 # ======== Lệnh /congluot =========
-@bot.message_handler(commands=['congluot'])
+@bot.message_handler(commands=['addtun'])
 def congluot_nap(message):
     if message.from_user.id not in ADMIN_IDS:
         bot.reply_to(message, "⛔ Bạn không có quyền sử dụng lệnh này!")
@@ -396,7 +398,7 @@ def congluot_nap(message):
 
     parts = message.text.split()
     if len(parts) < 3 or not parts[1].isdigit() or not parts[2].isdigit():
-        bot.reply_to(message, "❌ Sai cú pháp. Dùng /congluot <user_id> <số lượt>")
+        bot.reply_to(message, "❌ Sai cú pháp. Dùng /addtun <user_id> <số lượt>")
         return
 
     uid = int(parts[1])
@@ -404,11 +406,11 @@ def congluot_nap(message):
     user_turns[uid] = user_turns.get(uid, 0) + turns
 
     save_data()
-    bot.send_message(uid, f"✅ Bạn đã được cộng {turns} lượt dùng!\n🎫 Lượt mới của bạn: {turns}\n🎯 Dùng lệnh /tx <md5> để dự đoán")
-    bot.reply_to(message, f"📥 Đã cộng {turns} lượt cho user {uid}.")
+    bot.send_message(uid, f"✅ Bạn đã được cộng {turns} lượt dùng!\n🎫 Lượt mới của bạn: {turns}\n🎯 Dùng lệnh /tx <md5> để dự đoán\n\n🕒 Time: {now}")
+    bot.reply_to(message, f"📥 Đã cộng {turns} lượt cho user {uid}\n\n🕒 Time: {now}")
 
 # ======== Lệnh /truluot =========
-@bot.message_handler(commands=['truluot'])
+@bot.message_handler(commands=['settun'])
 def truluot_nap(message):
     if message.from_user.id not in ADMIN_IDS:
         bot.reply_to(message, "⛔ Bạn không có quyền sử dụng lệnh này!")
@@ -424,8 +426,8 @@ def truluot_nap(message):
     user_turns[uid] = user_turns.get(uid, 0) - turns
 
     save_data()
-    bot.send_message(uid, f"🚫OOPS. Bạn đã bị trừ lượt dùng!\n🎫 Số lượt mới của bạn sau khi bị trừ là: {turns}\n🎲 Nếu bạn thắc mắc tại sao bị trừ. Vui lòng liên hệ @qqaassdd1231")
-    bot.reply_to(message, f"📥 Đã trừ {turns} lượt của user {uid}.")
+    bot.send_message(uid, f"🚫OOPS. Bạn đã bị trừ lượt dùng!\n🎫 Số lượt mới của bạn sau khi bị trừ là: {turns}\n🎲 Nếu bạn thắc mắc tại sao bị trừ. Vui lòng liên hệ @qqaassdd1231\n\n🕒 Time: {now}")
+    bot.reply_to(message, f"📥 Đã trừ {turns} lượt của user {uid}\n\n🕒 Time: {now}")
 
 # ======== Lệnh /dabank =========
 @bot.message_handler(commands=['dabank'])
@@ -444,7 +446,8 @@ def handle_dabank(message):
                                    f"👤 User ID: {user_id}\n"
                                    f"💰 Số tiền: {amount} VNĐ\n"
                                    f"📝 Nội dung: {content}\n\n"
-                                   f"Duyệt bằng lệnh: /congluot {user_id} {amount}")
+                                   f"Duyệt bằng lệnh: /addtun {user_id} {amount}\n\n"
+                                   f"🕒 Time: {now}")
 
     bot.reply_to(message, f"⏳ Đang chờ admin duyệt giao dịch.\n"
                           f"📥 Sau khi admin duyệt, bạn sẽ nhận được lượt dùng.\n"
@@ -470,14 +473,16 @@ def handle_report(message):
                                    f"👤 User ID: {user_id}\n"
                                    f"📝 Tiêu dề: {title}\n"
                                    f"📝 Nội dung: {content}\n\n"
-                                   f"👾 Sử dụng lệnh /sendmessage để thông báo tời người dùng báo lỗi")
+                                   f"👾 Sử dụng lệnh /sendmessage để thông báo tời người dùng báo lỗi\n\n"
+                                   f"🕒 Time: {now}")
 
     bot.reply_to(message, f"⏳ Đang chờ admin phản hồi\n"
                           f"📥 Sau khi admin phản hồi, lỗi của bạn sẽ được admin hỗ trợ fix\n"
                           f"📝 Tiêu đề: {title}\n"
                           f"📝 Nội dung:{content}\n"
                           f"🔹 Bạn có thể báo lỗi cho admin tại @qqaassdd để được hỗ trợ nhanh hơn\n"
-                          f"🆔️ ID của bạn là: {user_id}")
+                          f"🆔️ ID của bạn là: {user_id}\n\n"
+                          f"🕒 Time: {now}")
 
 # ======== Lệnh /sendmessage =========
 @bot.message_handler(commands=['sendmessage'])
@@ -497,12 +502,12 @@ def send_message(message):
     user_id = message.from_user.id
 
     save_data()
-    bot.send_message(uid, f"✉️ Phản hồi từ admin\n👾 Tiêu đề: {title}\n✒️Nội Dung: {content} ")
-    bot.reply_to(message, f"📥 Đã phản hồi report đến người dùng {uid}\n👾 Tiêu đề: {title}\n✉️ Nội dung: {content}")
+    bot.send_message(uid, f"✉️ Phản hồi từ admin\n👾 Tiêu đề: {title}\n✒️Nội Dung: {content}\n\n🕒 Time: {now}")
+    bot.reply_to(message, f"📥 Đã phản hồi report đến người dùng {uid}\n👾 Tiêu đề: {title}\n✉️ Nội dung: {content}\n\n🕒 Time: {now}")
 
 # ======== Lệnh /support =========
 @bot.message_handler(commands=['support'])
 def handle_support(message):
-    bot.reply_to(message, "📩 Nếu bạn cần hỗ trợ, vui lòng liên hệ với ctv tại: @nghuypha\n📩 Nếu bạn có thắc mắc về bot vui lòng liên hệ với quản trị viên bot tại: @hoanglong3703\n\n👾 Note: chúng tôi chuẩn bị cập nhật trang hỗ trợ thành live chat")
+    bot.reply_to(message, "📩 Nếu bạn cần hỗ trợ, vui lòng liên hệ đến livechat tại [đang cập nhật livechat]\n📩 Nếu bạn có thắc mắc về bot vui lòng liên hệ với quản trị viên bot tại: @hoanglong3703\n\n👾 Note: chúng tôi chuẩn bị cập nhật trang hỗ trợ thành live chat")
 
 bot.polling()
