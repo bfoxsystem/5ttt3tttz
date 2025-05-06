@@ -228,8 +228,8 @@ def send_welcome(message):
                           f"🔹 /id → lấy id của bạn\n"
                           f"🔹 /report <nội dung> → Báo lỗi về bot\n"
                           f"🚫 Lệnh cho Quản Trị Viên.\n"
-                          f"🔹 /congluot <id/tun> → Cấp lượt dùng\n"
-                          f"🔹 /truluot <id/tun> → Trừ lượt dùng\n"
+                          f"🔹 /addtun <id/tun> → Cấp lượt dùng\n"
+                          f"🔹 /settun <id/tun> → Set lại lượt dùng\n"
                           f"🔹 /result <tài/xỉu> → Nhập kết quả thực tế (Admin)\n"
                           f"🆔️ ID của bạn là: {user_id}\n\n"
                           f"🕒 Time: {now}")
