@@ -114,7 +114,7 @@ async def system_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await msg.edit_text(result, parse_mode="Markdown")
 
 def main():
-    application = Application.builder().token("YOUR_BOT_TOKEN").build()
+    application = Application.builder().token("7825228410:AAGdATjvUoQCUA0HtepBTq_EjlQZnChI6_Q").build()
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("random", random_key))
