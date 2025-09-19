@@ -3,4 +3,5 @@ python-telegram-bot
 pyTelegramBotAPI
 DateTime 
 psutil
+aiohttp
 Flask
